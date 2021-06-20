@@ -14,17 +14,19 @@ public class DataBase {
     }
 
     public void findHyponymSuchAs() {
-        String rgx = "<np>[^<]*</np>";
+        String rgx =
+                "(<np>[\\w\\s+]*<.np>\\s+)(such as\\s+)((<np>[\\w\\s+]*<.np>)(\\s+and\\s+|\\s+or\\s+|\\s+,\\s+)?"
+                        + "(<np>[\\w\\s+]*<.np>\\s+)*)";
         Pattern p = Pattern.compile(rgx);
         int i = 0;
-        for (String line: rawData.getLines()) {
+        for (String line : rawData.getLines()) {
             Matcher m = p.matcher(line);
-            while (m.find()){
+            while (m.find()) {
                 System.out.println(m.group());
             }
             i++;
-            if (i>10){
-                break;
+            if (i > 10) {
+                //break;
             }
         }
     }
