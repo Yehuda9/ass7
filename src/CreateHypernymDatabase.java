@@ -13,6 +13,6 @@ public class CreateHypernymDatabase {
             System.exit(1);
         }
         DataBase dataBase = new DataBase(rawData);
-        dataBase.findHyponym();
+        dataBase.findHyponymSuchAs();
     }
 }

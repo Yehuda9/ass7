@@ -7,13 +7,13 @@ public class RawData {
     private BufferedReader text;
     private List<String> lines = new LinkedList<>();
 
-    public List<String> getLines() {
-        return lines;
-    }
-
     public RawData(BufferedReader txt) {
         this.text = txt;
         updateDb();
+    }
+
+    public List<String> getLines() {
+        return lines;
     }
 
     private void updateDb() {

@@ -13,7 +13,7 @@ public class DataBase {
         this.db = new TreeMap<>();
     }
 
-    public void findHyponym() {
+    public void findHyponymSuchAs() {
         String rgx = "<np>[^<]*</np>";
         Pattern p = Pattern.compile(rgx);
         int i = 0;
