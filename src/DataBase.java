@@ -15,8 +15,8 @@ public class DataBase {
 
     public void findHyponymSuchAs() {
         String rgx =
-                "(<np>([\\w\\s+])*<.np>\\s+)(such as\\s+)((<np>([\\w\\s+])*<.np>)(\\s+and\\s+|\\s+or\\s+|\\s+,\\s+)?"
-                        + "(<np>([\\w\\s+])*<.np>\\s+)*)";
+                "(<np>[^<]*</np>\\s+)(such\\s+as\\s+)(<np>[^<]*</np>)"
+                        + "((\\s*(,)?\\s*)(\\s*or\\s*|\\s*and\\s*)?(<np>[^<]*</np>))*";
         Pattern p = Pattern.compile(rgx);
         int i = 0;
         for (String line : rawData.getLines()) {
