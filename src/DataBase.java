@@ -17,13 +17,12 @@ public class DataBase {
     }
 
     public void findHyponymSuchAs() {
-        String rgx = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s*as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
+        String rgx = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
                 + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
         Pattern p = Pattern.compile(rgx);
         PrintWriter writer = null;
         try {
-            writer =
-                    new PrintWriter("C:\\Users\\USER\\IdeaProjects\\ass7\\hypernym_db.txt", StandardCharsets.UTF_8);
+            writer = new PrintWriter("C:\\Users\\USER\\IdeaProjects\\ass7\\hypernym_db.txt", StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,8 +30,16 @@ public class DataBase {
             Matcher m = p.matcher(line);
             while (m.find()) {
                 assert writer != null;
-                writer.println(m.group());
-                System.out.println(m.group());
+                String rgx2 = "<np>([^<]*)</np>";
+                Pattern p2 = Pattern.compile(rgx2);
+                Matcher m2 = p2.matcher(m.group());
+                writer.write(m.group(1)+" ");
+                m2.find();
+                while (m2.find()){
+                    writer.write(m2.group(1)+" ");
+                    System.out.println(m2.group(1));
+                }
+                writer.println("");
             }
         }
     }
