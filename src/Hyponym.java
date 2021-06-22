@@ -1,14 +1,34 @@
-import java.util.Map;
+import java.util.Objects;
 
 public class Hyponym {
-    /*private String name;
-    private int count;*/
-    private Map<String,Integer> nameCount;
+    private String name;
+    //private int count;
 
-    public Hyponym(Map<String,Integer> nc) {
-        this.nameCount = nc;
+
+    public Hyponym(String n) {
+        this.name = n;
+        //this.count = c;
     }
-    public void increase(String name){
-        nameCount.put(name, nameCount.get(name) + 1);
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+        Hyponym hyponym = (Hyponym) o;
+        return Objects.equals(getName(), hyponym.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
