@@ -53,14 +53,14 @@ public class DataBase {
                     hypernym = getKeyByValue(hypernym);
                 }
                 db.put(hypernym, null);
-                writer.write(m.group(1) + " ");
+                //writer.write(m.group(1) + " ");
                 List<Hyponym> hyponymList = new LinkedList<>();
                 m2.find();
                 while (m2.find()) {
                     Hyponym hyponym = new Hyponym(m2.group(1));
                     hyponymList.add(hyponym);
                     db.put(hypernym, hyponymList);
-                    writer.write(m2.group(1) + " ");
+                    //writer.write(m2.group(1) + " ");
                 }
                 writer.println("");
             }
