@@ -2,16 +2,25 @@ import java.util.Objects;
 
 public class Hyponym {
     private String name;
-    //private int count;
+    private int count;
 
 
-    public Hyponym(String n) {
+    public Hyponym(String n, int c) {
         this.name = n;
-        //this.count = c;
+        this.count = c;
+    }
+
+    public void increase() {
+        this.count += 1;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 
     @Override
@@ -23,12 +32,7 @@ public class Hyponym {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(getName());
-    }
-
-    @Override
     public String toString() {
-        return name;
+        return name + " (" + count + ")";
     }
 }
