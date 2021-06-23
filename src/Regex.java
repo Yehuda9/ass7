@@ -9,17 +9,23 @@ public class Regex {
     private Pattern patternSuchAsRgx;
     private Matcher matcher;
     private String currentFind;
-    public Regex(String r){
+
+    public Regex(String r) {
         this.rgx = r;
         this.patternSuchAsRgx = Pattern.compile(rgx);
     }
-    public String currentFind(String line){
+
+    public String currentFind(String line) {
         this.matcher = patternSuchAsRgx.matcher(line);
         this.currentFind = matcher.group(1);
         nextFind();
         return this.currentFind;
     }
-    public Boolean nextFind(){
+
+    public Boolean nextFind() {
+        if (matcher == null) {
+            return true;
+        }
         return this.matcher.find();
     }
 }
