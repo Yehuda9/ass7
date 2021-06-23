@@ -93,15 +93,12 @@ public class DataBase {
             e.printStackTrace();
         }*/
         for (String line : rawData.getLines()) {
-            Regex regex = new Regex(SUCH_AS_RGX);
             Matcher hypernymMatcher = patternSuchAsRgx.matcher(line);
-            while (regex.nextFind()) {
+            while (hypernymMatcher.find()) {
                 String rgx2 = "<np>([^<]*)</np>";
                 Pattern p2 = Pattern.compile(rgx2);
-                //Regex hyponymMatcher = new Regex(regex.currentFind());
-                Matcher hyponymMatcher = p2.matcher(regex.currentFind(line));
+                Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
                 Hypernym hypernym = new Hypernym(hypernymMatcher.group(1));
-                Hypernym hypernym2 = new Hypernym(regex.currentFind(line));
                 hyponymMatcher.find();
                 if (db.containsKey(hypernym)) {
                     updateHypernym(hypernym, hyponymMatcher);
