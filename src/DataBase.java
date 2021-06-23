@@ -7,14 +7,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataBase {
-    private final String RGX_NP = "<np>([^<]*)</np>";
-    private final String SUCH_AS_RGX =
+    private final String NP_RGX = "<np>([^<]*)</np>";
+    private final String FIRST_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
                     + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
-    private final String SUCH_NP_AS_RGX =
+    private final String SECOND_RGX =
             "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)(<np>([^<]*)</np>)"
                     + "((\\s*,\\s*\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?)*";
-    private List<String> rgxList = new LinkedList<>(Arrays.asList(this.SUCH_AS_RGX, this.SUCH_NP_AS_RGX));
+    private final String THIRD_RGX =
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
+                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
+    private final String FORTH_RGX =
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*especially\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
+                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
+    private List<String> rgxList =
+            new LinkedList<>(Arrays.asList(this.FIRST_RGX, this.SECOND_RGX, this.THIRD_RGX, this.FORTH_RGX));
     private RawData rawData;
     private Map<Hypernym, List<Hyponym>> db;
 
@@ -64,12 +71,12 @@ public class DataBase {
         Pattern pattern = Pattern.compile(rgx);
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
-            Pattern p2 = Pattern.compile(this.RGX_NP);
+            Pattern p2 = Pattern.compile(this.NP_RGX);
             Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
             hyponymMatcher.find();
             //hypernym is the first match of NP in the whole match
             Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
-            System.out.println("found hypernym: " + hypernym);
+            //System.out.println("found hypernym: " + hypernym);
             addHypernym(hypernym, hyponymMatcher);
         }
     }
@@ -78,6 +85,22 @@ public class DataBase {
         for (String line : rawData.getLines()) {
             for (String rgx : rgxList) {
                 findMatches(line, rgx);
+            }
+        }
+        reduceUnder3hyponyms();
+    }
+
+    private void reduceUnder3hyponyms() {
+        Map<Hypernym, List<Hyponym>> dbCopy = new HashMap<>(getDb());
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : dbCopy.entrySet()) {
+            List<Hyponym> hyponymListCopy = new LinkedList<>(hypernym.getValue());
+            for (Hyponym hyponym : hyponymListCopy) {
+                if (hyponym.getCount() < 3) {
+                    hypernym.getValue().remove(hyponym);
+                }
+            }
+            if (hypernym.getValue().isEmpty()) {
+                getDb().remove(hypernym.getKey());
             }
         }
     }

@@ -10,6 +10,10 @@ public class Hyponym {
         this.count = c;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public void increase() {
         this.count += 1;
     }
