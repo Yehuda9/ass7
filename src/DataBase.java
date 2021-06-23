@@ -7,14 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataBase {
+    private final String RGX_NP = "<np>([^<]*)</np>";
     private final String SUCH_AS_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
                     + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
     private final String SUCH_NP_AS_RGX =
             "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)(<np>([^<]*)</np>)"
                     + "((\\s*,\\s*\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?)*";
-    Pattern patternSuchAsRgx;
-    Pattern patternSuchNpAsRgx;
     private List<String> rgxList = new LinkedList<>(Arrays.asList(this.SUCH_AS_RGX, this.SUCH_NP_AS_RGX));
     private RawData rawData;
     private Map<Hypernym, List<Hyponym>> db;
@@ -22,8 +21,6 @@ public class DataBase {
     public DataBase(RawData rwdt) {
         this.rawData = rwdt;
         this.db = new HashMap<>();
-        this.patternSuchAsRgx = Pattern.compile(SUCH_AS_RGX);
-        this.patternSuchNpAsRgx = Pattern.compile(SUCH_NP_AS_RGX);
     }
 
     public Map<Hypernym, List<Hyponym>> getDb() {
@@ -67,13 +64,12 @@ public class DataBase {
         Pattern pattern = Pattern.compile(rgx);
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
-            String rgxNP = "<np>([^<]*)</np>";
-            Pattern p2 = Pattern.compile(rgxNP);
+            Pattern p2 = Pattern.compile(this.RGX_NP);
             Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
             hyponymMatcher.find();
             //hypernym is the first match of NP in the whole match
             Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
-            System.out.println("found hypernym: "+hypernym);
+            System.out.println("found hypernym: " + hypernym);
             addHypernym(hypernym, hyponymMatcher);
         }
     }
