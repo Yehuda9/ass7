@@ -22,7 +22,7 @@ public class CreateHypernymDatabase {
             break;
         }
         DataBase dataBase = new DataBase(rawData);
-        dataBase.findHyponymSuchAs();
+        dataBase.findMatches();
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
             System.out.println(hypernym);
         }

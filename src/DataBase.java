@@ -30,30 +30,6 @@ public class DataBase {
         return db;
     }
 
-    /*public Hypernym getKeyByValue(Hypernym value) {
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getDb().entrySet()) {
-            if (hypernym.getKey().equals(value)) {
-                return hypernym.getKey();
-            }
-        }
-        return null;
-    }*/
-
-    /**
-     * given hypernym and matcher and hypernym to db map
-     * and find all its hyponyms using while loop and addHyponym method.
-     *
-     * @param hypernym hypernym
-     * @param matcher  hyponym matcher
-     */
-    private void updateHypernym(Hypernym hypernym, Matcher matcher) {
-        while (matcher.find()) {
-            Hyponym hyponym = new Hyponym(matcher.group(1), 1);
-            addHyponym(hypernym, hyponym);
-            //db.get(hypernym).add(hyponym);
-        }
-    }
-
     /**
      * add new hypernym to db map and find all its hyponyms using while loop and addHyponym method.
      *
@@ -61,11 +37,12 @@ public class DataBase {
      * @param matcher  hyponym matcher
      */
     private void addHypernym(Hypernym hypernym, Matcher matcher) {
-        db.put(hypernym, new LinkedList<>());
+        if (!db.containsKey(hypernym)) {
+            db.put(hypernym, new LinkedList<>());
+        }
         while (matcher.find()) {
             Hyponym hyponym = new Hyponym(matcher.group(1), 1);
             addHyponym(hypernym, hyponym);
-            //db.get(hypernym).add(hyponym);
         }
     }
 
@@ -78,93 +55,34 @@ public class DataBase {
      */
     private void addHyponym(Hypernym hypernym, Hyponym hyponym) {
         if (db.get(hypernym).contains(hyponym)) {
-            //int i = db.get(hypernym).indexOf(hyponym);
             db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)).increase();
+            //System.out.println("found hyponym: "+db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)));
         } else {
             db.get(hypernym).add(hyponym);
+            //System.out.println("found hyponym: "+hyponym);
         }
     }
 
-    private void firstRgx(String line, String rgx) {
+    private void findMatches(String line, String rgx) {
         Pattern pattern = Pattern.compile(rgx);
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
-            String rgx2 = "<np>([^<]*)</np>";
-            Pattern p2 = Pattern.compile(rgx2);
+            String rgxNP = "<np>([^<]*)</np>";
+            Pattern p2 = Pattern.compile(rgxNP);
             Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
             hyponymMatcher.find();
+            //hypernym is the first match of NP in the whole match
             Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
-            //Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
-            //Hypernym hypernym = new Hypernym(hypernymMatcher.group(1));
-            //hyponymMatcher.find();
-            if (db.containsKey(hypernym)) {
-                updateHypernym(hypernym, hyponymMatcher);
-            } else {
-                addHypernym(hypernym, hyponymMatcher);
-            }
-                /*db.put(hypernym, null);
-                //writer.write(m.group(1) + " ");
-                List<Hyponym> hyponymList = new LinkedList<>();
-                hyponymMatcher.find();
-                while (hyponymMatcher.find()) {
-                    Hyponym hyponym = new Hyponym(hyponymMatcher.group(1), 0);
-                    hyponymList.add(hyponym);
-                    db.put(hypernym, hyponymList);
-                    //writer.write(m2.group(1) + " ");
-                }*/
+            System.out.println("found hypernym: "+hypernym);
+            addHypernym(hypernym, hyponymMatcher);
         }
     }
 
-    public void findHyponymSuchAs() {
-        //String rgx = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
-        //+ "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
-        //Pattern p = Pattern.compile(SUCH_AS_RGX);
-        /*try {
-            writer = new PrintWriter("C:\\Users\\USER\\IdeaProjects\\ass7\\hypernym_db.txt", StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    public void findMatches() {
         for (String line : rawData.getLines()) {
-            /*FindHypernymInText findHypernymInText = new FindHypernymInText(line);
-            List<String> list = findHypernymInText.matchList();
-            Hypernym hypernym = new Hypernym(list.get(0));
-            list.remove(0);
-            for (String s : list) {
-                FindHyponymInLine findHyponymInLine = new FindHyponymInLine(s);
-                for (String l : findHyponymInLine.matchList()) {
-                    if (db.containsKey(hypernym)) {
-                        updateHypernym(hypernym, hyponymMatcher);
-                    } else {
-                        addHypernym(hypernym, hyponymMatcher);
-                    }
-                }
-            }*/
             for (String rgx : rgxList) {
-                firstRgx(line, rgx);
+                findMatches(line, rgx);
             }
-            /*Matcher hypernymMatcher = patternSuchAsRgx.matcher(line);
-            while (hypernymMatcher.find()) {
-                String rgx2 = "<np>([^<]*)</np>";
-                Pattern p2 = Pattern.compile(rgx2);
-                Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
-                Hypernym hypernym = new Hypernym(hypernymMatcher.group(1));
-                hyponymMatcher.find();
-                if (db.containsKey(hypernym)) {
-                    updateHypernym(hypernym, hyponymMatcher);
-                } else {
-                    addHypernym(hypernym, hyponymMatcher);
-                }
-                *//*db.put(hypernym, null);
-                //writer.write(m.group(1) + " ");
-                List<Hyponym> hyponymList = new LinkedList<>();
-                hyponymMatcher.find();
-                while (hyponymMatcher.find()) {
-                    Hyponym hyponym = new Hyponym(hyponymMatcher.group(1), 0);
-                    hyponymList.add(hyponym);
-                    db.put(hypernym, hyponymList);
-                    //writer.write(m2.group(1) + " ");
-                }*//*
-            }*/
         }
     }
 }
