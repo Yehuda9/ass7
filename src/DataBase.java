@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class DataBase {
                     + "((\\s*,\\s*\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?)*";
     Pattern patternSuchAsRgx;
     Pattern patternSuchNpAsRgx;
+    private List<String> rgxList = new LinkedList<>(Arrays.asList(this.SUCH_AS_RGX, this.SUCH_NP_AS_RGX));
     private RawData rawData;
     private Map<Hypernym, List<Hyponym>> db;
 
@@ -83,6 +85,36 @@ public class DataBase {
         }
     }
 
+    private void firstRgx(String line, String rgx) {
+        Pattern pattern = Pattern.compile(rgx);
+        Matcher hypernymMatcher = pattern.matcher(line);
+        while (hypernymMatcher.find()) {
+            String rgx2 = "<np>([^<]*)</np>";
+            Pattern p2 = Pattern.compile(rgx2);
+            Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
+            hyponymMatcher.find();
+            Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
+            //Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
+            //Hypernym hypernym = new Hypernym(hypernymMatcher.group(1));
+            //hyponymMatcher.find();
+            if (db.containsKey(hypernym)) {
+                updateHypernym(hypernym, hyponymMatcher);
+            } else {
+                addHypernym(hypernym, hyponymMatcher);
+            }
+                /*db.put(hypernym, null);
+                //writer.write(m.group(1) + " ");
+                List<Hyponym> hyponymList = new LinkedList<>();
+                hyponymMatcher.find();
+                while (hyponymMatcher.find()) {
+                    Hyponym hyponym = new Hyponym(hyponymMatcher.group(1), 0);
+                    hyponymList.add(hyponym);
+                    db.put(hypernym, hyponymList);
+                    //writer.write(m2.group(1) + " ");
+                }*/
+        }
+    }
+
     public void findHyponymSuchAs() {
         //String rgx = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
         //+ "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
@@ -93,7 +125,24 @@ public class DataBase {
             e.printStackTrace();
         }*/
         for (String line : rawData.getLines()) {
-            Matcher hypernymMatcher = patternSuchAsRgx.matcher(line);
+            /*FindHypernymInText findHypernymInText = new FindHypernymInText(line);
+            List<String> list = findHypernymInText.matchList();
+            Hypernym hypernym = new Hypernym(list.get(0));
+            list.remove(0);
+            for (String s : list) {
+                FindHyponymInLine findHyponymInLine = new FindHyponymInLine(s);
+                for (String l : findHyponymInLine.matchList()) {
+                    if (db.containsKey(hypernym)) {
+                        updateHypernym(hypernym, hyponymMatcher);
+                    } else {
+                        addHypernym(hypernym, hyponymMatcher);
+                    }
+                }
+            }*/
+            for (String rgx : rgxList) {
+                firstRgx(line, rgx);
+            }
+            /*Matcher hypernymMatcher = patternSuchAsRgx.matcher(line);
             while (hypernymMatcher.find()) {
                 String rgx2 = "<np>([^<]*)</np>";
                 Pattern p2 = Pattern.compile(rgx2);
@@ -105,7 +154,7 @@ public class DataBase {
                 } else {
                     addHypernym(hypernym, hyponymMatcher);
                 }
-                /*db.put(hypernym, null);
+                *//*db.put(hypernym, null);
                 //writer.write(m.group(1) + " ");
                 List<Hyponym> hyponymList = new LinkedList<>();
                 hyponymMatcher.find();
@@ -114,8 +163,8 @@ public class DataBase {
                     hyponymList.add(hyponym);
                     db.put(hypernym, hyponymList);
                     //writer.write(m2.group(1) + " ");
-                }*/
-            }
+                }*//*
+            }*/
         }
     }
 }
