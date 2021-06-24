@@ -19,10 +19,11 @@ public class CreateHypernymDatabase {
                 e.printStackTrace();
                 System.exit(1);
             }
-            break;
+            //break;
         }
         DataBase dataBase = new DataBase(rawData);
         dataBase.findMatches();
+        //dataBase.findMatches();
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
             System.out.println(hypernym);
         }
