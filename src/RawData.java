@@ -9,14 +9,17 @@ public class RawData {
 
     public RawData(BufferedReader txt) {
         this.text = txt;
-        updateDb();
+        updateDb(text);
     }
-
+    public RawData(){
+        this.text = null;
+    }
     public List<String> getLines() {
         return lines;
     }
 
-    private void updateDb() {
+    public void updateDb(BufferedReader text) {
+        this.text = text;
         try {
             String line;
             while ((line = this.text.readLine()) != null) {

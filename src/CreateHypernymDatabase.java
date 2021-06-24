@@ -8,24 +8,29 @@ import java.util.Objects;
 
 public class CreateHypernymDatabase {
     public static void main(String[] args) {
-        RawData rawData = null;
+        RawData rawData = new RawData();
         File folder = new File(args[0]);
         File[] listOfFiles = Objects.requireNonNull(folder.listFiles());
+        DataBase dataBase = new DataBase();
         for (File file : listOfFiles) {
             try {
                 BufferedReader input = new BufferedReader(new FileReader(file));
-                rawData = new RawData(input);
+                rawData.updateDb(input);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 System.exit(1);
             }
+            dataBase.findMatches(rawData);
+            for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
+                System.out.println(hypernym);
+            }
             //break;
         }
-        DataBase dataBase = new DataBase(rawData);
-        dataBase.findMatches();
+        /*DataBase dataBase = new DataBase(rawData);
+        dataBase.findMatches();*/
         //dataBase.findMatches();
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
+        /*for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
             System.out.println(hypernym);
-        }
+        }*/
     }
 }

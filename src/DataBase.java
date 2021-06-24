@@ -31,6 +31,9 @@ public class DataBase {
         this.rawData = rwdt;
         this.db = new HashMap<>();
     }
+    public DataBase(){
+        this(null);
+    }
 
     public Map<Hypernym, List<Hyponym>> getDb() {
         return db;
@@ -64,10 +67,10 @@ public class DataBase {
     private void addHyponym(Hypernym hypernym, Hyponym hyponym) {
         if (db.get(hypernym).contains(hyponym)) {
             db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)).increase();
-            //System.out.println("found hyponym: " + db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)));
+            System.out.println("found hyponym: " + db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)));
         } else {
             db.get(hypernym).add(hyponym);
-            //System.out.println("found hyponym: " + hyponym);
+            System.out.println("found hyponym: " + hyponym);
         }
     }
 
@@ -83,7 +86,8 @@ public class DataBase {
             i += 1;
         }
     }
-    private void fifthRgx(String line){
+
+    private void fifthRgx(String line) {
         Pattern pattern = Pattern.compile(this.FIFTH_RGX);
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
@@ -96,14 +100,15 @@ public class DataBase {
             Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
             hyponymMatcher = p2.matcher(hyponym);
             hyponymMatcher.find();
-            //System.out.println("found hypernym: " + hypernym);
+            System.out.println("found hypernym: " + hypernym);
             addHypernym(hypernym, hyponymMatcher);
         }
     }
+
     private void findMatches(String line, String rgx) {
         Pattern pattern = Pattern.compile(rgx);
         Matcher hypernymMatcher = pattern.matcher(line);
-        hypernymMatcher.find();
+        //hypernymMatcher.find();
         if (rgx.equals(FIFTH_RGX)) {
             fifthRgx(line);
             /*Pattern p2 = Pattern.compile(this.NP_RGX);
@@ -117,21 +122,35 @@ public class DataBase {
             addHypernym(hypernym, hyponymMatcher);
             addHyponym(hypernym, hyponym);*/
         } else {
-            while (hypernymMatcher.find()) {
+        while (hypernymMatcher.find()) {
+            /*if (rgx.equals(FIFTH_RGX)) {
+                fifthRgx(line);
+                 *//*Pattern p2 = Pattern.compile(this.NP_RGX);
+            Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
+            Hypernym hypernym = new Hypernym(hypernymMatcher.group(6));
+            hyponymMatcher.find();
+            //hypernym is the first match of NP in the whole match
+            //Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
+            //System.out.println("found hypernym: " + hypernym);
+            Hyponym hyponym = new Hyponym(hyponymMatcher.group(1), 1);
+            addHypernym(hypernym, hyponymMatcher);
+            addHyponym(hypernym, hyponym);*//*
+            } else {*/
                 Pattern p2 = Pattern.compile(this.NP_RGX);
                 Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
                 hyponymMatcher.find();
                 //hypernym is the first match of NP in the whole match
                 Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
-                //System.out.println("found hypernym: " + hypernym);
+                System.out.println("found hypernym: " + hypernym);
                 addHypernym(hypernym, hyponymMatcher);
             }
         }
-
     }
 
-    public void findMatches() {
+    public void findMatches(RawData rawData) {
+        this.rawData = rawData;
         for (String line : rawData.getLines()) {
+            //System.out.println(line);
             for (String rgx : rgxList) {
                 findMatches(line, rgx);
             }
