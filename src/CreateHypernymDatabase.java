@@ -13,9 +13,22 @@ public class CreateHypernymDatabase {
         RawData rawData = new RawData();
         File folder = new File(args[0]);
         File[] listOfFiles = Objects.requireNonNull(folder.listFiles());
-        IterateCorpus iterateCorpus = new IterateCorpus();
+        Data data = new Data();
+        IterateCorpus iterateCorpus = new IterateCorpus(data);
         iterateCorpus.sendLineToMatch(listOfFiles);
-        DataBase dataBase = new DataBase();
+        data.reduceUnder3hyponyms();
+        data.sortHyponymList();
+        List<Map.Entry<Hypernym, List<Hyponym>>> list = new LinkedList<>(data.getDb().entrySet());
+        list.sort(Map.Entry.comparingByKey(Hypernym::compareTo));
+        data.setDb(list);
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym:data.getDb().entrySet()) {
+            System.out.print(hypernym.getKey()+": ");
+            for (Hyponym hyponym: hypernym.getValue()) {
+                System.out.print(hyponym+", ");
+            }
+            System.out.println("");
+        }
+        /*DataBase dataBase = new DataBase();
         for (File file : listOfFiles) {
             rawData = new RawData();
             try {
@@ -46,16 +59,16 @@ public class CreateHypernymDatabase {
         //List<Map.Entry<Hypernym, Hyponym>> list1 = dataBase.getDb().entrySet().;
         //List<Map.Entry<Hypernym, Hyponym>> list = new ArrayList<>(dataBase.getDb().entrySet());
         //list.sort(Entry.comparingByValue());
-        /*dataBase.getDb().entrySet().stream()
+        *//*dataBase.getDb().entrySet().stream()
                 .sorted((k1, k2) -> k1.getKey().compareTo(k2.getKey()))
-                .forEach(k -> System.out.println(k.getKey() + ": " + k.getValue()));*/
+                .forEach(k -> System.out.println(k.getKey() + ": " + k.getValue()));*//*
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
             //System.out.println(hypernym);
         }
-        /*DataBase dataBase = new DataBase(rawData);
-        dataBase.findMatches();*/
+        *//*DataBase dataBase = new DataBase(rawData);
+        dataBase.findMatches();*//*
         //dataBase.findMatches();
-        /*for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
+        *//*for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
             System.out.println(hypernym);
         }*/
     }

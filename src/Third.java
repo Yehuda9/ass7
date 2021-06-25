@@ -12,7 +12,12 @@ public class Third extends FirstToFourthRgx {
     }
 
     @Override
-    public void findMatchesInLine(String line, GeneralBehaviour rgx) {
-        super.findMatchesInLine(line, THIRD_RGX);
+    protected String getRgx() {
+        return THIRD_RGX;
+    }
+
+    @Override
+    public NounPhrase findMatchesInLine(String line, GeneralBehaviour rgx) {
+        return super.findMatchesInLine(line, Third.getInstance());
     }
 }

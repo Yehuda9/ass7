@@ -1,6 +1,6 @@
 public class Second extends FirstToFourthRgx {
     private static Second SECOND_SINGLE_INSTANCE = null;
-    private final String SECOND_RGX =
+    public final String SECOND_RGX =
             "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?(<np>([^<]*)</np>))*"
                     + "(((\\s*,\\s*|\\s*and\\s*|\\s*or\\s*)(<np>([^<]*)</np>)))?";
 
@@ -13,7 +13,12 @@ public class Second extends FirstToFourthRgx {
     }
 
     @Override
-    public void findMatchesInLine(String line, GeneralBehaviour rgx) {
-        super.findMatchesInLine(line, SECOND_RGX);
+    protected String getRgx() {
+        return SECOND_RGX;
+    }
+
+    @Override
+    public NounPhrase findMatchesInLine(String line, GeneralBehaviour rgx) {
+        return super.findMatchesInLine(line, Second.getInstance());
     }
 }
