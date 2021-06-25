@@ -13,6 +13,8 @@ public class CreateHypernymDatabase {
         RawData rawData = new RawData();
         File folder = new File(args[0]);
         File[] listOfFiles = Objects.requireNonNull(folder.listFiles());
+        IterateCorpus iterateCorpus = new IterateCorpus();
+        iterateCorpus.sendLineToMatch(listOfFiles);
         DataBase dataBase = new DataBase();
         for (File file : listOfFiles) {
             rawData = new RawData();
@@ -37,7 +39,7 @@ public class CreateHypernymDatabase {
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym:list) {
             System.out.print(hypernym.getKey());
             for (Hyponym hyponym: hypernym.getValue()) {
-                System.out.print(hyponym);
+                System.out.print(hyponym+", ");
             }
             System.out.println("");
         }

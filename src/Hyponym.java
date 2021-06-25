@@ -37,7 +37,7 @@ public class Hyponym implements Comparable<Hyponym> {
 
     @Override
     public String toString() {
-        return name + " (" + count + "), ";
+        return name + " (" + count + ")";
     }
 
     @Override
