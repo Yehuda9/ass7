@@ -1,7 +1,7 @@
 public class Third extends FirstToFourthRgx {
     private static Third THIRD_SINGLE_INSTANCE = null;
     private final String THIRD_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
                     + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
 
     private Third() {}

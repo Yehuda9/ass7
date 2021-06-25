@@ -65,6 +65,7 @@ public class IterateCorpus {
                 e.printStackTrace();
                 System.exit(1);
             }
+            break;
         }
         data.reduceUnder3hyponyms();
         data.sortHyponymList();

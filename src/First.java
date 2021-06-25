@@ -1,7 +1,10 @@
 public class First extends FirstToFourthRgx {
-    public final String FIRST_RGX =
+    /*public final String FIRST_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
-                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
+                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";*/
+    public final String FIRST_RGX =
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
     private static First FIRST_SINGLE_INSTANCE = null;
 
     private First(){}

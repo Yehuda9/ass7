@@ -1,8 +1,8 @@
 public class Second extends FirstToFourthRgx {
     private static Second SECOND_SINGLE_INSTANCE = null;
     public final String SECOND_RGX =
-            "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?(<np>([^<]*)</np>))*"
-                    + "(((\\s*,\\s*|\\s*and\\s*|\\s*or\\s*)(<np>([^<]*)</np>)))?";
+            "such\\s+(<np>([^<]*)</np>)\\s+as(\\s*,\\s*)?\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?(<np>([^<]*)</np>)(\\s*,\\s*)?)*"
+                    + "((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)(<np>([^<]*)</np>)))?";
 
     private Second() {}
 
