@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Hyponym {
+public class Hyponym implements Comparable<Hyponym> {
     private String name;
     private int count;
 
@@ -37,6 +37,12 @@ public class Hyponym {
 
     @Override
     public String toString() {
-        return name + " (" + count + ")";
+        return name + " (" + count + "), ";
+    }
+
+    @Override
+    public int compareTo(Hyponym hyponym) {
+        return hyponym.getCount()-getCount();
+        //return getName().compareTo(hyponym.getName());
     }
 }

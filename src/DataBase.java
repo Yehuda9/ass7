@@ -1,25 +1,44 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataBase {
     private final String NP_RGX = "<np>([^<]*)</np>";
+
     private final String FIRST_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
-                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
     private final String SECOND_RGX =
-            "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)(<np>([^<]*)</np>)"
-                    + "((\\s*,\\s*\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?)*";
+            "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?(<np>([^<]*)</np>))*"
+                    + "(((\\s*,\\s*|\\s*and\\s*|\\s*or\\s*)(<np>([^<]*)</np>)))?";
+    /*private final String SECOND_RGX = "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?"
+            + "(<np>([^<]*)</np>))*(((\\s*,\\s*|\\s*and\\s*|\\s*or\\s*)(<np>([^<]*)</np>)))?";*/
     private final String THIRD_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
-                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
     private final String FORTH_RGX =
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*especially\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
+    /*private final String FIRST_RGX =
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";*/
+    /*private final String SECOND_RGX =
+            "such\\s+(<np>([^<]*)</np>)\\s+as\\s+(<np>([^<]*)</np>)((\\s*,\\s*)(<np>([^<]*)</np>)"
+                    + "((\\s*,\\s*\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?)*";*/
+    /*private final String THIRD_RGX =
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
+                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";*/
+    /*private final String FORTH_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*especially\\s*<np>([^<]*)</np>((\\s*,\\s*)<np>([^<]*)</np>)*"
-                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";
+                    + "((\\s*and\\s*|\\s*or\\s*)<np>([^<]*)</np>)?";*/
     private final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*which\\s+is\\s*"
             + "((\\s*an\\s+example\\s*|\\s*a\\s+kind\\s*|\\s*a\\s+class\\s*)?(of\\s+))?<np>([^<]*)</np>";
     private List<String> rgxList = new LinkedList<>(
@@ -31,7 +50,8 @@ public class DataBase {
         this.rawData = rwdt;
         this.db = new HashMap<>();
     }
-    public DataBase(){
+
+    public DataBase() {
         this(null);
     }
 
@@ -49,7 +69,7 @@ public class DataBase {
         if (!db.containsKey(hypernym)) {
             db.put(hypernym, new LinkedList<>());
         }
-        while (matcher.find()){
+        while (matcher.find()) {
             Hyponym hyponym = new Hyponym(matcher.group(1), 1);
             addHyponym(hypernym, hyponym);
         }
@@ -71,7 +91,8 @@ public class DataBase {
             db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)).increase();
             System.out.println("found hyponym: " + db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)));
         } else {
-            addSorted(db.get(hypernym),hyponym);
+            db.get(hypernym).add(hyponym);
+            //addSorted(db.get(hypernym), hyponym);
             //db.get(hypernym).add(hyponym);
             System.out.println("found hyponym: " + hyponym);
         }
@@ -81,15 +102,34 @@ public class DataBase {
         if (hyponymList.isEmpty()) {
             hyponymList.add(hyponym);
         } else {
-            int i = 0;
-            List<Hyponym> hyponymListCopy = new LinkedList<>(hyponymList);
-            for (Hyponym h : hyponymListCopy) {
-                if (h.getCount() >= hyponym.getCount()) {
+            List<Hyponym> hyponymListCopy = new ArrayList<>(hyponymList);
+            Hyponym prev = hyponymListCopy.get(0);
+            if (hyponym.getCount() >= prev.getCount()) {
+                hyponymList.add(0, hyponym);
+                return;
+            }
+            if (hyponym.getCount() <= hyponymList.get(hyponymList.size() - 1).getCount()) {
+                hyponymList.add(hyponymList.size(), hyponym);
+                return;
+            }
+            Hyponym next;
+            int i = 1;
+            while (i < hyponymListCopy.size()) {
+                prev = hyponymListCopy.get(i);
+                next = hyponymListCopy.get(i + 1);
+                if (hyponym.getCount() <= prev.getCount() && hyponym.getCount() >= next.getCount()) {
                     hyponymList.add(i, hyponym);
                     return;
                 }
                 i += 1;
             }
+            /*for (Hyponym h : hyponymListCopy) {
+                if (h.getCount() >= hyponym.getCount()) {
+                    hyponymList.add(i + 1, hyponym);
+                    return;
+                }
+                i += 1;
+            }*/
         }
     }
 
@@ -110,13 +150,14 @@ public class DataBase {
             addHypernym(hypernym, hyponymMatcher);
         }
     }
-    private void extractMatches(String line,String rgx){
-        if (rgx.equals(this.FIFTH_RGX)){fifthRgx(line);}
-        else {
-            rgxExceptFifth(line,rgx);
+
+    private void extractMatches(String line, String rgx) {
+        if (rgx.equals(this.FIFTH_RGX)) {fifthRgx(line);} else {
+            rgxExceptFifth(line, rgx);
         }
     }
-    private void rgxExceptFifth(String line, String rgx){
+
+    private void rgxExceptFifth(String line, String rgx) {
         Pattern pattern = Pattern.compile(rgx);
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
@@ -180,14 +221,31 @@ public class DataBase {
                 extractMatches(line, rgx);
             }
         }
-        reduceUnder3hyponyms();
+        /*reduceUnder3hyponyms();
+        sortHyponymList();*/
     }
 
-    private void reduceUnder3hyponyms() {
-        Map<Hypernym, List<Hyponym>> dbCopy = new HashMap<>(getDb());
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : dbCopy.entrySet()) {
+    public void sortHypernymMap() {
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getDb().entrySet()) {
+            hypernym.getValue().sort(Hyponym::compareTo);
+        }
+    }
+
+    public void sortHyponymList(List<Map.Entry<Hypernym, List<Hyponym>>> list) {
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : list) {
+            hypernym.getValue().sort(Hyponym::compareTo);
+        }
+        /*getDb().entrySet().stream()
+                .sorted((k1, k2) -> k1.getKey().compareTo(k2.getKey()))
+                .forEach(k -> System.out.println(k.getKey() + ": " + k.getValue()));*/
+        //Arrays.stream(getDb().entrySet().toArray()).sorted(Hypernym::compareTo);
+    }
+
+    public void reduceUnder3hyponyms(List<Map.Entry<Hypernym, List<Hyponym>>> list) {
+        List<Map.Entry<Hypernym, List<Hyponym>>> dbCopy = new LinkedList<>(list);
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : dbCopy) {
             if (hypernym.getValue().size() < 3) {
-                getDb().remove(hypernym.getKey());
+                list.remove(hypernym);
             }
             /*List<Hyponym> hyponymListCopy = new LinkedList<>(hypernym.getValue());
             for (Hyponym hyponym : hyponymListCopy) {

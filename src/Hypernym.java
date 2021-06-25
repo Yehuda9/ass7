@@ -1,6 +1,7 @@
+import java.util.Locale;
 import java.util.Objects;
 
-public class Hypernym {
+public class Hypernym implements Comparable<Hypernym> {
     private String name;
 
 
@@ -14,7 +15,7 @@ public class Hypernym {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getName().toLowerCase());
     }
 
     @Override
@@ -22,11 +23,16 @@ public class Hypernym {
         if (this == o) { return true; }
         if (o == null || getClass() != o.getClass()) { return false; }
         Hypernym hypernym = (Hypernym) o;
-        return Objects.equals(getName(), hypernym.getName());
+        return Objects.equals(getName().toLowerCase(), hypernym.getName().toLowerCase());
     }
 
     @Override
     public String toString() {
-        return name;
+        return name + ": ";
+    }
+
+    @Override
+    public int compareTo(Hypernym hypernym) {
+        return getName().toLowerCase().compareTo(hypernym.getName().toLowerCase());
     }
 }
