@@ -57,8 +57,6 @@ public class DataBase {
             Hyponym hyponym = new Hyponym(matcher.group(1), 1);
             addHyponym(hypernym, hyponym);
         } while (matcher.find());*/
-
-
     }
 
     /**
@@ -73,7 +71,8 @@ public class DataBase {
             db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)).increase();
             System.out.println("found hyponym: " + db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)));
         } else {
-            db.get(hypernym).add(hyponym);
+            addSorted(db.get(hypernym),hyponym);
+            //db.get(hypernym).add(hyponym);
             System.out.println("found hyponym: " + hyponym);
         }
     }
@@ -81,13 +80,16 @@ public class DataBase {
     private void addSorted(List<Hyponym> hyponymList, Hyponym hyponym) {
         if (hyponymList.isEmpty()) {
             hyponymList.add(hyponym);
-        }
-        int i = 0;
-        for (Hyponym h : hyponymList) {
-            if (h.getCount() >= hyponym.getCount()) {
-                hyponymList.add(i, h);
+        } else {
+            int i = 0;
+            List<Hyponym> hyponymListCopy = new LinkedList<>(hyponymList);
+            for (Hyponym h : hyponymListCopy) {
+                if (h.getCount() >= hyponym.getCount()) {
+                    hyponymList.add(i, hyponym);
+                    return;
+                }
+                i += 1;
             }
-            i += 1;
         }
     }
 
@@ -103,7 +105,7 @@ public class DataBase {
             //hypernym is the first match of NP in the whole match
             Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
             hyponymMatcher = p2.matcher(hyponym);
-            hyponymMatcher.find();
+            //hyponymMatcher.find();
             System.out.println("found hypernym: " + hypernym);
             addHypernym(hypernym, hyponymMatcher);
         }
