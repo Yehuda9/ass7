@@ -13,6 +13,7 @@ public class CreateHypernymDatabase {
         File[] listOfFiles = Objects.requireNonNull(folder.listFiles());
         DataBase dataBase = new DataBase();
         for (File file : listOfFiles) {
+            rawData = new RawData();
             try {
                 BufferedReader input = new BufferedReader(new FileReader(file));
                 rawData.updateDb(input);
@@ -21,10 +22,11 @@ public class CreateHypernymDatabase {
                 System.exit(1);
             }
             dataBase.findMatches(rawData);
-            for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
-                System.out.println(hypernym);
-            }
+
             //break;
+        }
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym:dataBase.getDb().entrySet()) {
+            System.out.println(hypernym);
         }
         /*DataBase dataBase = new DataBase(rawData);
         dataBase.findMatches();*/
