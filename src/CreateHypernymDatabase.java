@@ -14,20 +14,27 @@ public class CreateHypernymDatabase {
         File folder = new File(args[0]);
         File[] listOfFiles = Objects.requireNonNull(folder.listFiles());
         Data data = new Data();
-        IterateCorpus iterateCorpus = new IterateCorpus(data);
+        IterateCorpus iterateCorpus = new IterateCorpus(data,args[1]);
         iterateCorpus.sendLineToMatch(listOfFiles);
-        data.reduceUnder3hyponyms();
-        data.sortHyponymList();
+        /*data.reduceUnder3hyponyms();
+        data.sortHyponymList();*/
         List<Map.Entry<Hypernym, List<Hyponym>>> list = new LinkedList<>(data.getDb().entrySet());
         list.sort(Map.Entry.comparingByKey(Hypernym::compareTo));
-        data.setDb(list);
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym:data.getDb().entrySet()) {
+        /*data.setDb(list);
+        for (Map.Entry<Hypernym, List<Hyponym>> hypernym:list) {
+            System.out.print(hypernym.getKey());
+            for (Hyponym hyponym: hypernym.getValue()) {
+                System.out.print(hyponym+", ");
+            }
+            System.out.println("");
+        }*/
+        /*for (Map.Entry<Hypernym, List<Hyponym>> hypernym:data.getDb().entrySet()) {
             System.out.print(hypernym.getKey()+": ");
             for (Hyponym hyponym: hypernym.getValue()) {
                 System.out.print(hyponym+", ");
             }
             System.out.println("");
-        }
+        }*/
         /*DataBase dataBase = new DataBase();
         for (File file : listOfFiles) {
             rawData = new RawData();

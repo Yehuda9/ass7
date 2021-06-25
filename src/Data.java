@@ -1,10 +1,17 @@
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Data {
-    private Map<Hypernym, List<Hyponym>> db = new HashMap<>();
+    private Map<Hypernym, List<Hyponym>> db = new TreeMap<>(new Comparator<Hypernym>() {
+        @Override
+        public int compare(Hypernym o1, Hypernym o2) {
+            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+        }
+    });
 
     public Map<Hypernym, List<Hyponym>> getDb() {
         return db;
