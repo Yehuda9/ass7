@@ -33,9 +33,11 @@ public abstract class IterateCorpus {
     protected List<GeneralBehaviour> getRgxList() {
         return RgxList;
     }
-    protected String getOutputPath(){
+
+    protected String getOutputPath() {
         return outputPath;
     }
+
     protected void iterateRegex(String line) {
         NounPhrase nounPhrase = null;
         for (GeneralBehaviour rgx : RgxList) {
@@ -57,7 +59,32 @@ public abstract class IterateCorpus {
         }
     }
 
-    public abstract void sendLineToMatch(File[] files);
+    protected abstract void uniqueBehaviour();
+
+    public void sendLineToMatch(File[] files) {
+        String line;
+        BufferedReader bufferedReader = null;
+        for (File file : files) {
+            try {
+                bufferedReader = new BufferedReader(new FileReader(file));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    iterateRegex(line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+            //break;
+        }
+        uniqueBehaviour();
+        //printData();
+        writeToFile();
+    }
 /*
     private void printData() {
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym : data.getDb().entrySet()) {

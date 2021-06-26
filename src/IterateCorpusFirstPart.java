@@ -14,6 +14,12 @@ public class IterateCorpusFirstPart extends IterateCorpus {
         super(d, o);
     }
 
+    @Override
+    protected void uniqueBehaviour() {
+        getData().reduceUnder3hyponyms();
+        getData().sortHyponymList();
+    }
+
 /*    protected void iterateRegex(String line) {
         NounPhrase nounPhrase = null;
         for (GeneralBehaviour rgx : getRgxList()) {
@@ -35,7 +41,7 @@ public class IterateCorpusFirstPart extends IterateCorpus {
         }
     }*/
 
-    public void sendLineToMatch(File[] files) {
+/*    public void sendLineToMatch(File[] files) {
         String line;
         BufferedReader bufferedReader = null;
         for (File file : files) {
@@ -58,7 +64,7 @@ public class IterateCorpusFirstPart extends IterateCorpus {
         firstPart();
         printData();
         writeToFile();
-    }
+    }*/
     protected void firstPart(){
         getData().reduceUnder3hyponyms();
         getData().sortHyponymList();
