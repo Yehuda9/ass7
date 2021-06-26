@@ -11,7 +11,7 @@ import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IterateCorpus {
+public abstract class IterateCorpus {
     private First first = First.getInstance();
     private Second second = Second.getInstance();
     private Third third = Third.getInstance();
@@ -26,6 +26,16 @@ public class IterateCorpus {
         this.outputPath = o;
     }
 
+    protected Data getData() {
+        return data;
+    }
+
+    protected List<GeneralBehaviour> getRgxList() {
+        return RgxList;
+    }
+    protected String getOutputPath(){
+        return outputPath;
+    }
     protected void iterateRegex(String line) {
         NounPhrase nounPhrase = null;
         for (GeneralBehaviour rgx : RgxList) {
@@ -38,7 +48,7 @@ public class IterateCorpus {
                 hypernymMatcher.find();
             }
             do {
-                nounPhrase = rgx.findMatchesInLine(line, rgx);
+                nounPhrase = rgx.findMatchesInLine(hypernymMatcher.group(), rgx);
                 if (nounPhrase == null) {
                     continue;
                 }
@@ -47,32 +57,8 @@ public class IterateCorpus {
         }
     }
 
-    public void sendLineToMatch(File[] files) {
-        String line;
-        BufferedReader bufferedReader = null;
-        for (File file : files) {
-            try {
-                bufferedReader = new BufferedReader(new FileReader(file));
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-            try {
-                while ((line = bufferedReader.readLine()) != null) {
-                    iterateRegex(line);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-            break;
-        }
-        data.reduceUnder3hyponyms();
-        data.sortHyponymList();
-        printData();
-        writeToFile();
-    }
-
+    public abstract void sendLineToMatch(File[] files);
+/*
     private void printData() {
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym : data.getDb().entrySet()) {
             System.out.print(hypernym.getKey() + ": ");
@@ -81,35 +67,7 @@ public class IterateCorpus {
             }
             System.out.println("");
         }
-    }
+    }*/
 
-    private void writeToFile() {
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(this.outputPath + "/hypernym_db.txt", StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        int k = 0;
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : data.getDb().entrySet()) {
-            assert writer != null;
-            writer.write(hypernym.getKey() + ": ");
-            int i = 0;
-            for (Hyponym hyponym : hypernym.getValue()) {
-                if (i == 0) {
-                    writer.write(hyponym.toString());
-
-                } else {
-                    writer.write(", " + hyponym);
-                }
-                i += 1;
-            }
-            if (k != data.getDb().size()-1) {
-                writer.write("\n");
-            }
-            k += 1;
-        }
-        assert writer != null;
-        writer.close();
-    }
+    protected abstract void writeToFile();
 }

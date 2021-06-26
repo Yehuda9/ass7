@@ -17,14 +17,6 @@ public class Data {
         return db;
     }
 
-    public void setDb(List<Map.Entry<Hypernym, List<Hyponym>>> list) {
-        Map<Hypernym, List<Hyponym>> newDb = new HashMap<>();
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym:list) {
-            newDb.put(hypernym.getKey(),hypernym.getValue());
-        }
-        this.db = newDb;
-    }
-
     public boolean containHypernym(Hypernym hypernym) {
         return db.containsKey(hypernym);
     }
