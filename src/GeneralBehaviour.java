@@ -5,17 +5,13 @@ import java.util.regex.Matcher;
  * define shared activities for all connections between hypernyms and hyponyms
  */
 public abstract class GeneralBehaviour {
-    private final String NP_RGX = "<np>([^<]*)</np>";
+    public static final String NP_RGX = "<np>([^<]*)</np>";
 
-    /**
-     * Gets np rgx.
-     *
-     * @return the np rgx
-     */
-    protected String getNP_RGX() {
+
+    /*protected String getNP_RGX() {
         return NP_RGX;
     }
-
+*/
     /**
      * Gets rgx.
      *

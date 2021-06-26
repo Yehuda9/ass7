@@ -16,7 +16,7 @@ public abstract class IterateCorpus {
     private Third third = Third.getInstance();
     private Fourth fourth = Fourth.getInstance();
     private Fifth fifth = Fifth.getInstance();
-    private List<GeneralBehaviour> RgxList = new LinkedList<>(Arrays.asList(first, second, third, fourth, fifth));
+    private List<GeneralBehaviour> rgxList = new LinkedList<>(Arrays.asList(first, second, third, fourth, fifth));
     private Data data;
     private String outputPath;
 
@@ -46,7 +46,7 @@ public abstract class IterateCorpus {
      * @return rgx list
      */
     protected List<GeneralBehaviour> getRgxList() {
-        return RgxList;
+        return rgxList;
     }
 
     /**
@@ -68,7 +68,7 @@ public abstract class IterateCorpus {
      */
     protected void iterateRegex(String line) {
         NounPhrase nounPhrase = null;
-        for (GeneralBehaviour rgx : RgxList) {
+        for (GeneralBehaviour rgx : rgxList) {
             Pattern pattern = Pattern.compile(rgx.getRgx());
             Matcher hypernymMatcher = pattern.matcher(line);
             if (!hypernymMatcher.find()) {
@@ -88,7 +88,7 @@ public abstract class IterateCorpus {
     }
 
     /**
-     * specify behaviour for first and second assignment,
+     * specify behaviour for first and second assignment.
      */
     protected abstract void uniqueBehaviour();
 

@@ -1,15 +1,30 @@
-public class Second extends FirstToFourthRgx {
-    private static Second SECOND_SINGLE_INSTANCE = null;
-    public final String SECOND_RGX =
-            "such\\s+(<np>([^<]*)</np>)\\s+as(\\s*,\\s*)?\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?(<np>([^<]*)</np>)(\\s*,\\s*)?)*"
+/**
+ * The type Second.
+ * singleton
+ */
+public final class Second extends FirstToFourthRgx {
+    private static Second secondSingleInstance = null;
+    /**
+     * The Second rgx.
+     */
+    public static final String SECOND_RGX =
+            "such\\s+(<np>([^<]*)</np>)\\s+as(\\s*,\\s*)?\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?"
+                    + "(<np>([^<]*)</np>)(\\s*,\\s*)?)*"
                     + "((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)(<np>([^<]*)</np>)))?";
 
-    private Second() {}
+    /**
+     * private constructor.
+     */
+    private Second() { }
 
+    /**
+     * Gets instance.
+     *
+     * @return instance of this
+     */
     public static Second getInstance() {
-        if (SECOND_SINGLE_INSTANCE == null) { SECOND_SINGLE_INSTANCE = new Second(); }
-
-        return SECOND_SINGLE_INSTANCE;
+        if (secondSingleInstance == null) { secondSingleInstance = new Second(); }
+        return secondSingleInstance;
     }
 
     @Override

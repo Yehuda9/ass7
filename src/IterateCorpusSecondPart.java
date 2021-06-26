@@ -31,7 +31,9 @@ public class IterateCorpusSecondPart extends IterateCorpus {
     }
 
     @Override
-    protected void uniqueBehaviour() {countHypernym();}
+    protected void uniqueBehaviour() {
+        countHypernym();
+    }
 
     @Override
     protected void writeToFile() {
@@ -59,14 +61,15 @@ public class IterateCorpusSecondPart extends IterateCorpus {
      * if true, add to hypernymIntegerMap hypernym and hyponym count.
      */
     private void countHypernym() {
-        Hyponym hyponym = new Hyponym(this.hyponym, 0);
+        Hyponym hypo = new Hyponym(this.hyponym, 0);
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getData().getDb().entrySet()) {
-            if (hypernym.getValue().contains(hyponym)) {
-                this.hypernymIntegerMap.put(hypernym.getKey(), 0);
+            if (hypernym.getValue().contains(hypo)) {
+                if (!hypernymIntegerMap.containsKey(hypernym.getKey())) {
+                    this.hypernymIntegerMap.put(hypernym.getKey(), 0);
+                }
                 int c = 0;
                 for (Hyponym h : hypernym.getValue()) {
-                    c = 0;
-                    if (h.equals(hyponym)) {
+                    if (h.equals(hypo)) {
                         c = h.getCount();
                         break;
                     }

@@ -1,23 +1,45 @@
 import java.util.Objects;
 
+/**
+ * The type Hyponym.
+ */
 public class Hyponym implements Comparable<Hyponym> {
     private String name;
     private int count;
 
 
+    /**
+     * Instantiates a new Hyponym.
+     *
+     * @param n name
+     * @param c count
+     */
     public Hyponym(String n, int c) {
         this.name = n;
         this.count = c;
     }
 
+    /**
+     * Gets count.
+     *
+     * @return the count
+     */
     public int getCount() {
         return count;
     }
 
+    /**
+     * Increase.
+     */
     public void increase() {
         this.count += 1;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
@@ -42,6 +64,6 @@ public class Hyponym implements Comparable<Hyponym> {
 
     @Override
     public int compareTo(Hyponym hyponym) {
-        return hyponym.getCount()-getCount();
+        return hyponym.getCount() - getCount();
     }
 }

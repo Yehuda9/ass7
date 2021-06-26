@@ -1,15 +1,31 @@
-public class Fifth extends FifthRgx {
-    private static Fifth FIFTH_SINGLE_INSTANCE = null;
-    public final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*which\\s+is\\s*(\\s*,\\s*)?"
-            + "((\\s*,\\s*)?(\\s*an\\s+example\\s*|\\s*a\\s+kind\\s*|\\s*a\\s+class\\s*)?(\\s*,\\s*)?(of\\s+))?<np>([^<]*)</np>";
+/**
+ * The type Fifth.
+ * singleton.
+ */
+public final class Fifth extends FifthRgx {
+    /**
+     * The Fifth rgx.
+     */
+    public static final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*which\\s+is\\s*(\\s*,\\s*)?"
+            + "((\\s*,\\s*)?(\\s*an\\s+example\\s*|\\s*a\\s+kind\\s*|\\s*a\\s+class\\s*)?"
+            + "(\\s*,\\s*)?(of\\s+))?<np>([^<]*)</np>";
+    private static Fifth fifthSingleInstance = null;
 
-    private Fifth() {}
+    /**
+     * private constructor.
+     */
+    private Fifth() { }
 
+    /**
+     * Gets instance.
+     *
+     * @return instance of this.
+     */
     public static Fifth getInstance() {
-        if (FIFTH_SINGLE_INSTANCE == null) { FIFTH_SINGLE_INSTANCE = new Fifth(); }
-
-        return FIFTH_SINGLE_INSTANCE;
+        if (fifthSingleInstance == null) { fifthSingleInstance = new Fifth(); }
+        return fifthSingleInstance;
     }
+
     @Override
     public String getRgx() {
         return FIFTH_RGX;

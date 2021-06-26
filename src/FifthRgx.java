@@ -13,7 +13,7 @@ public abstract class FifthRgx extends GeneralBehaviour {
         Pattern pattern = Pattern.compile(rgx.getRgx());
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
-            Pattern p2 = Pattern.compile(this.getNP_RGX());
+            Pattern p2 = Pattern.compile(NP_RGX);
             hyponymMatcher = p2.matcher(hypernymMatcher.group());
             hyponymMatcher.find();
             String hyponym = hyponymMatcher.group();

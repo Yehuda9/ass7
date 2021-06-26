@@ -10,7 +10,7 @@ public abstract class FirstToFourthRgx extends GeneralBehaviour {
     protected NounPhrase findMatchesInLine(String line, GeneralBehaviour rgx) {
         Pattern pattern = Pattern.compile(rgx.getRgx());
         Matcher hypernymMatcher = pattern.matcher(line);
-        Pattern p2 = Pattern.compile(this.getNP_RGX());
+        Pattern p2 = Pattern.compile(NP_RGX);
         hypernymMatcher.find();
         Matcher hyponymMatcher = p2.matcher(hypernymMatcher.group());
         hyponymMatcher.find();

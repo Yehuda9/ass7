@@ -147,9 +147,10 @@ public class Data {
      * using compareTo method.
      */
     public void sortHyponymList() {
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getDb().entrySet()) {
+        getDb().forEach((key, value) -> value.sort(Hyponym::compareTo));
+        /*for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getDb().entrySet()) {
             hypernym.getValue().sort(Hyponym::compareTo);
-        }
+        }*/
     }
 
     /**

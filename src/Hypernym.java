@@ -1,14 +1,26 @@
-import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * The type Hypernym.
+ */
 public class Hypernym implements Comparable<Hypernym> {
     private String name;
 
 
+    /**
+     * Instantiates a new Hypernym.
+     *
+     * @param n name
+     */
     public Hypernym(String n) {
         this.name = n;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }

@@ -1,14 +1,26 @@
-public class Third extends FirstToFourthRgx {
-    private static Third THIRD_SINGLE_INSTANCE = null;
-    private final String THIRD_RGX =
+/**
+ * The type Third.
+ * singleton
+ */
+public final class Third extends FirstToFourthRgx {
+    private static Third thirdSingleInstance = null;
+    private static final String THIRD_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
                     + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
 
-    private Third() {}
+    /**
+     * private constructor.
+     */
+    private Third() { }
 
+    /**
+     * Gets instance.
+     *
+     * @return instance of this.
+     */
     public static Third getInstance() {
-        if (THIRD_SINGLE_INSTANCE == null) { THIRD_SINGLE_INSTANCE = new Third(); }
-        return THIRD_SINGLE_INSTANCE;
+        if (thirdSingleInstance == null) { thirdSingleInstance = new Third(); }
+        return thirdSingleInstance;
     }
 
     @Override
