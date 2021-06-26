@@ -25,7 +25,7 @@ public class IterateCorpusFirstPart extends IterateCorpus {
     }
 
     @Override
-    protected void writeToFile() {
+    protected void output() {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(this.getOutputPath() + "/hypernym_db.txt", StandardCharsets.UTF_8);

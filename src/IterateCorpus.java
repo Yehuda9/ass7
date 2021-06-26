@@ -120,11 +120,11 @@ public abstract class IterateCorpus {
             break;
         }
         uniqueBehaviour();
-        writeToFile();
+        output();
     }
 
     /**
-     * Write to file.
+     * Write to file or print result.
      */
-    protected abstract void writeToFile();
+    protected abstract void output();
 }

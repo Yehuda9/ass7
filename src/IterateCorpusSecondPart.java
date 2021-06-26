@@ -1,5 +1,3 @@
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -36,24 +34,15 @@ public class IterateCorpusSecondPart extends IterateCorpus {
     }
 
     @Override
-    protected void writeToFile() {
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter("../ass7/hypernym_db.txt", StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    protected void output() {
         int k = 0;
         for (Map.Entry<Hypernym, Integer> hypernym : hypernymIntegerMap.entrySet()) {
-            assert writer != null;
-            writer.write(hypernym.getKey() + ": (" + hypernym.getValue() + ")");
+            System.out.print(hypernym.getKey() + ": (" + hypernym.getValue() + ")");
             if (k != hypernymIntegerMap.size() - 1) {
-                writer.write("\n");
+                System.out.print("\n");
             }
             k += 1;
         }
-        assert writer != null;
-        writer.close();
     }
 
     /**
