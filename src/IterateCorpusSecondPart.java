@@ -1,18 +1,24 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * The type Iterate corpus second part.
+ */
 public class IterateCorpusSecondPart extends IterateCorpus {
     private String hyponym;
     private Map<Hypernym, Integer> hypernymIntegerMap;
 
+    /**
+     * Instantiates a new Iterate corpus second part.
+     *
+     * @param d data
+     * @param o output path
+     * @param h hyponym lemma
+     */
     public IterateCorpusSecondPart(Data d, String o, String h) {
         super(d, o);
         hypernymIntegerMap = new TreeMap<>(new Comparator<Hypernym>() {
@@ -23,32 +29,6 @@ public class IterateCorpusSecondPart extends IterateCorpus {
         });
         this.hyponym = h;
     }
-/*
-    @Override
-    public void sendLineToMatch(File[] files) {
-        String line;
-        BufferedReader bufferedReader = null;
-        for (File file : files) {
-            try {
-                bufferedReader = new BufferedReader(new FileReader(file));
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-            try {
-                while ((line = bufferedReader.readLine()) != null) {
-                    iterateRegex(line);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-            break;
-        }
-        countHypernym();
-        //printData();
-        writeToFile();
-    }*/
 
     @Override
     protected void uniqueBehaviour() {countHypernym();}
@@ -65,7 +45,7 @@ public class IterateCorpusSecondPart extends IterateCorpus {
         for (Map.Entry<Hypernym, Integer> hypernym : hypernymIntegerMap.entrySet()) {
             assert writer != null;
             writer.write(hypernym.getKey() + ": (" + hypernym.getValue() + ")");
-            if (k != getData().getDb().size() - 1) {
+            if (k != hypernymIntegerMap.size() - 1) {
                 writer.write("\n");
             }
             k += 1;
@@ -74,6 +54,10 @@ public class IterateCorpusSecondPart extends IterateCorpus {
         writer.close();
     }
 
+    /**
+     * iterate data map and for each hypernym check if it has hyponym lemma in its list,
+     * if true, add to hypernymIntegerMap hypernym and hyponym count.
+     */
     private void countHypernym() {
         Hyponym hyponym = new Hyponym(this.hyponym, 0);
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getData().getDb().entrySet()) {
@@ -87,7 +71,7 @@ public class IterateCorpusSecondPart extends IterateCorpus {
                         break;
                     }
                 }
-                this.hypernymIntegerMap.put(hypernym.getKey(), hypernymIntegerMap.get(hypernym.getKey()) + 1 + c);
+                this.hypernymIntegerMap.put(hypernym.getKey(), hypernymIntegerMap.get(hypernym.getKey()) + c);
             }
         }
     }

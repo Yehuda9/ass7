@@ -1,8 +1,11 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class FifthRgx extends GeneralBehaviour{
-
+/**
+ * The type Fifth rgx.
+ */
+public abstract class FifthRgx extends GeneralBehaviour {
+    /*second match is hypernym and first match is hyponym*/
     @Override
     protected NounPhrase findMatchesInLine(String line, GeneralBehaviour rgx) {
         NounPhrase nounPhrase = null;
@@ -19,18 +22,19 @@ public abstract class FifthRgx extends GeneralBehaviour{
             hyponymMatcher = p2.matcher(hyponym);
             System.out.println("found hypernym: " + hypernym);
             nounPhrase = new NounPhrase(hypernym);
-            //addHypernym(hypernym, hyponymMatcher);
         }
         if (hyponymMatcher == null) {
             return null;
         }
         return aggregateNp(hyponymMatcher, nounPhrase);
     }
+
+    /*
     protected NounPhrase aggregateNp(Matcher matcher, NounPhrase nounPhrase) {
         while (matcher.find()) {
             Hyponym hyponym = new Hyponym(matcher.group(1), 1);
             nounPhrase.add(hyponym);
         }
         return nounPhrase;
-    }
+    }*/
 }

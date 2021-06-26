@@ -43,6 +43,5 @@ public class Hyponym implements Comparable<Hyponym> {
     @Override
     public int compareTo(Hyponym hyponym) {
         return hyponym.getCount()-getCount();
-        //return getName().compareTo(hyponym.getName());
     }
 }

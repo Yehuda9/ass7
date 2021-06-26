@@ -1,15 +1,19 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+/**
+ * The type Iterate corpus first part.
+ */
 public class IterateCorpusFirstPart extends IterateCorpus {
 
+    /**
+     * Instantiates a new Iterate corpus first part.
+     *
+     * @param d d data
+     * @param o output path
+     */
     public IterateCorpusFirstPart(Data d, String o) {
         super(d, o);
     }
@@ -20,64 +24,6 @@ public class IterateCorpusFirstPart extends IterateCorpus {
         getData().sortHyponymList();
     }
 
-/*    protected void iterateRegex(String line) {
-        NounPhrase nounPhrase = null;
-        for (GeneralBehaviour rgx : getRgxList()) {
-            Pattern pattern = Pattern.compile(rgx.getRgx());
-            Matcher hypernymMatcher = pattern.matcher(line);
-            if (!hypernymMatcher.find()) {
-                continue;
-            } else {
-                hypernymMatcher = pattern.matcher(line);
-                hypernymMatcher.find();
-            }
-            do {
-                nounPhrase = rgx.findMatchesInLine(hypernymMatcher.group(), rgx);
-                if (nounPhrase == null) {
-                    continue;
-                }
-                getData().addNpToData(nounPhrase);
-            } while (hypernymMatcher.find());
-        }
-    }*/
-
-/*    public void sendLineToMatch(File[] files) {
-        String line;
-        BufferedReader bufferedReader = null;
-        for (File file : files) {
-            try {
-                bufferedReader = new BufferedReader(new FileReader(file));
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-            try {
-                while ((line = bufferedReader.readLine()) != null) {
-                    iterateRegex(line);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-            break;
-        }
-        firstPart();
-        printData();
-        writeToFile();
-    }*/
-    protected void firstPart(){
-        getData().reduceUnder3hyponyms();
-        getData().sortHyponymList();
-    }
-    private void printData() {
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getData().getDb().entrySet()) {
-            System.out.print(hypernym.getKey() + ": ");
-            for (Hyponym hyponym : hypernym.getValue()) {
-                System.out.print(hyponym + ", ");
-            }
-            System.out.println("");
-        }
-    }
     @Override
     protected void writeToFile() {
         PrintWriter writer = null;
@@ -100,7 +46,7 @@ public class IterateCorpusFirstPart extends IterateCorpus {
                 }
                 i += 1;
             }
-            if (k != getData().getDb().size()-1) {
+            if (k != getData().getDb().size() - 1) {
                 writer.write("\n");
             }
             k += 1;
