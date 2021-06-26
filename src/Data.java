@@ -57,15 +57,6 @@ public class Data {
     }
 
     /**
-     * Remove hypernym.
-     *
-     * @param hypernym hypernym
-     */
-    public void removeHypernym(Hypernym hypernym) {
-        db.remove(hypernym);
-    }
-
-    /**
      * Increase hyponym.
      *
      * @param hypernym hypernym
@@ -148,9 +139,6 @@ public class Data {
      */
     public void sortHyponymList() {
         getDb().forEach((key, value) -> value.sort(Hyponym::compareTo));
-        /*for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getDb().entrySet()) {
-            hypernym.getValue().sort(Hyponym::compareTo);
-        }*/
     }
 
     /**

@@ -3,7 +3,7 @@ import java.util.Objects;
 /**
  * The type Hypernym.
  */
-public class Hypernym implements Comparable<Hypernym> {
+public class Hypernym implements java.lang.Comparable<Hypernym> {
     private String name;
 
 

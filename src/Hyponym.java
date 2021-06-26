@@ -3,7 +3,7 @@ import java.util.Objects;
 /**
  * The type Hyponym.
  */
-public class Hyponym implements Comparable<Hyponym> {
+public class Hyponym implements java.lang.Comparable<Hyponym> {
     private String name;
     private int count;
 

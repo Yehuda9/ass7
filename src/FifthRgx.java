@@ -13,7 +13,7 @@ public abstract class FifthRgx extends GeneralBehaviour {
         Pattern pattern = Pattern.compile(rgx.getRgx());
         Matcher hypernymMatcher = pattern.matcher(line);
         while (hypernymMatcher.find()) {
-            Pattern p2 = Pattern.compile(NP_RGX);
+            Pattern p2 = Pattern.compile(GeneralBehaviour.NP_RGX);
             hyponymMatcher = p2.matcher(hypernymMatcher.group());
             hyponymMatcher.find();
             String hyponym = hyponymMatcher.group();
@@ -28,13 +28,4 @@ public abstract class FifthRgx extends GeneralBehaviour {
         }
         return aggregateNp(hyponymMatcher, nounPhrase);
     }
-
-    /*
-    protected NounPhrase aggregateNp(Matcher matcher, NounPhrase nounPhrase) {
-        while (matcher.find()) {
-            Hyponym hyponym = new Hyponym(matcher.group(1), 1);
-            nounPhrase.add(hyponym);
-        }
-        return nounPhrase;
-    }*/
 }

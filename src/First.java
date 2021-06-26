@@ -7,9 +7,6 @@ public final class First extends FirstToFourthRgx {
     /**
      * The First rgx.
      */
-/*public final String FIRST_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
-                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";*/
     public static final String FIRST_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
                     + "(\\s*,\\s*)?)*((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";

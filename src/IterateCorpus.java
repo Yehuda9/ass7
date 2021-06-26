@@ -117,7 +117,6 @@ public abstract class IterateCorpus {
                 e.printStackTrace();
                 System.exit(1);
             }
-            break;
         }
         uniqueBehaviour();
         output();

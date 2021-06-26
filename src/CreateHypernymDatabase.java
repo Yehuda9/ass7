@@ -17,7 +17,5 @@ public class CreateHypernymDatabase {
         Data data = new Data();
         IterateCorpus iterateCorpus = new IterateCorpusFirstPart(data, args[1]);
         iterateCorpus.sendLineToMatch(listOfFiles);
-        /*List<Map.Entry<Hypernym, List<Hyponym>>> list = new LinkedList<>(data.getDb().entrySet());
-        list.sort(Map.Entry.comparingByKey(Hypernym::compareTo));*/
     }
 }

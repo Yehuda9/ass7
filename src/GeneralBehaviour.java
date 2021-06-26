@@ -7,11 +7,6 @@ import java.util.regex.Matcher;
 public abstract class GeneralBehaviour {
     public static final String NP_RGX = "<np>([^<]*)</np>";
 
-
-    /*protected String getNP_RGX() {
-        return NP_RGX;
-    }
-*/
     /**
      * Gets rgx.
      *
