@@ -126,10 +126,8 @@ public class Data {
     protected void addHyponym(Hypernym hypernym, Hyponym hyponym) {
         if (isHypernymContainHyponym(hypernym, hyponym)) {
             increaseHyponym(hypernym, hyponym);
-            System.out.println("found hyponym: " + db.get(hypernym).get(db.get(hypernym).indexOf(hyponym)));
         } else {
             addHyponymToDb(hypernym, hyponym);
-            System.out.println("found hyponym: " + hyponym);
         }
     }
 

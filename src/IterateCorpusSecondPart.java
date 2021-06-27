@@ -35,6 +35,10 @@ public class IterateCorpusSecondPart extends IterateCorpus {
 
     @Override
     protected void output() {
+        if (hypernymIntegerMap.isEmpty()){
+            System.out.println("The lemma doesn't appear in the corpus.");
+            return;
+        }
         int k = 0;
         for (Map.Entry<Hypernym, Integer> hypernym : hypernymIntegerMap.entrySet()) {
             System.out.print(hypernym.getKey() + ": (" + hypernym.getValue() + ")");
