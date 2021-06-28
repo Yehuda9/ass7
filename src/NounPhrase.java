@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The type Noun phrase.
@@ -7,6 +9,16 @@ import java.util.List;
 public class NounPhrase {
     private Hypernym hypernym;
     private List<Hyponym> hyponymList;
+    private String stringHypernym;
+    private Map<String, Integer> hyponymMap;
+
+    public Map<String, Integer> getHyponymMap() {
+        return hyponymMap;
+    }
+
+    public String getStringHypernym() {
+        return stringHypernym;
+    }
 
     /**
      * Instantiates a new Noun phrase.
@@ -18,6 +30,10 @@ public class NounPhrase {
         this.hypernym = hyper;
         this.hyponymList = hypo;
     }
+    public NounPhrase(String hyper, Map<String, Integer> hypo) {
+        this.stringHypernym = hyper;
+        this.hyponymMap = hypo;
+    }
 
     /**
      * Instantiates a new Noun phrase.
@@ -27,7 +43,9 @@ public class NounPhrase {
     public NounPhrase(Hypernym hyper) {
         this(hyper, new LinkedList<>());
     }
-
+    public NounPhrase(String hyper) {
+        this(hyper, new HashMap<>());
+    }
     /**
      * Gets hypernym.
      *
@@ -55,4 +73,8 @@ public class NounPhrase {
     public void add(Hyponym hyponym) {
         hyponymList.add(hyponym);
     }
+    public void add(String hyponym) {
+        hyponymMap.put(hyponym,1);
+    }
+
 }

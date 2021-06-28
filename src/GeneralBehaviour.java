@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 /**
@@ -35,7 +37,9 @@ public abstract class GeneralBehaviour {
     protected NounPhrase aggregateNp(Matcher matcher, NounPhrase nounPhrase) {
         while (matcher.find()) {
             Hyponym hyponym = new Hyponym(matcher.group(1), 1);
-            nounPhrase.add(hyponym);
+            Map<String,Integer> hypo = new HashMap<>();
+            hypo.put(matcher.group(1), 1);
+            nounPhrase.add(matcher.group(1));
         }
         return nounPhrase;
     }

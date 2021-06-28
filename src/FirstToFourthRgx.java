@@ -16,7 +16,9 @@ public abstract class FirstToFourthRgx extends GeneralBehaviour {
         hyponymMatcher.find();
         //hypernym is the first match of NP in the whole match
         Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
+        String hyper = hyponymMatcher.group(1);
+        NounPhrase nounPhrase1 = new NounPhrase(hyper);
         NounPhrase nounPhrase = new NounPhrase(hypernym);
-        return aggregateNp(hyponymMatcher, nounPhrase);
+        return aggregateNp(hyponymMatcher, nounPhrase1);
     }
 }
