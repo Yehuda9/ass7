@@ -6,9 +6,12 @@ public final class Fifth extends FifthRgx {
     /**
      * The Fifth rgx.
      */
-    public static final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*which\\s+is\\s*(\\s*,\\s*)?"
+    /*public static final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*which\\s+is\\s*(\\s*,\\s*)?"
             + "((\\s*,\\s*)?(\\s*an\\s+example\\s*|\\s*a\\s+kind\\s*|\\s*a\\s+class\\s*)?"
-            + "(\\s*,\\s*)?(of\\s+))?<np>([^<]*)</np>";
+            + "(\\s*,\\s*)?(of\\s+))?<np>([^<]*)</np>";*/
+    public static final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*)(\\s+,\\s+)?\\s*which\\s+is\\s+(\\s*,\\s+)?"
+            + "((\\s+,\\s+)?(\\s*an\\s+example\\s+|\\s*a\\s+kind\\s+|\\s*a\\s+class\\s+)?"
+            + "(\\s*,\\s+)?(of\\s+))?(\\s*)<np>([^<]*)</np>";
     private static Fifth fifthSingleInstance = null;
 
     /**

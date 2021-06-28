@@ -20,12 +20,12 @@ public class IterateCorpusFirstPart extends IterateCorpus {
 
     @Override
     protected void uniqueBehaviour() {
-        getData().reduceUnder3hyponyms1();
+        getData().reduceUnder3hyponyms();
         getData().sortHyponymList();
     }
 
-
-    protected void output1() {
+    @Override
+    protected void output() {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(this.getOutputPath() + "/hypernym_db.txt", StandardCharsets.UTF_8);
@@ -47,35 +47,6 @@ public class IterateCorpusFirstPart extends IterateCorpus {
                 i += 1;
             }
             if (k != getData().getDb().size() - 1) {
-                writer.write("\n");
-            }
-            k += 1;
-        }
-        assert writer != null;
-        writer.close();
-    }
-    @Override
-    protected void output() {
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(this.getOutputPath() + "/hypernym_db.txt", StandardCharsets.UTF_8);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        int k = 0;
-        for (Map.Entry<String, Map<String,Integer>> hypernym : getData().getDb1().entrySet()) {
-            assert writer != null;
-            writer.write(hypernym.getKey() + ": ");
-            int i = 0;
-            for (Map.Entry<String,Integer> hyponym : hypernym.getValue().entrySet()) {
-                if (i == 0) {
-                    writer.write(hyponym.toString());
-                } else {
-                    writer.write(", " + hyponym);
-                }
-                i += 1;
-            }
-            if (k != getData().getDb1().size() - 1) {
                 writer.write("\n");
             }
             k += 1;

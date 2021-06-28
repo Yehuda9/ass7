@@ -4,9 +4,12 @@
  */
 public final class Third extends FirstToFourthRgx {
     private static Third thirdSingleInstance = null;
-    private static final String THIRD_RGX =
+    /*private static final String THIRD_RGX =
             "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
-                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
+                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";*/
+    private static final String THIRD_RGX =
+            "<np>([^<]*)</np>(\\s+,\\s*)?\\s+including\\s+(\\s*,\\s+)?(\\s*)<np>([^<]*)</np>(((\\s+,\\s+)?(\\s*)(<np>([^<]*)</np>)(\\s*)"
+                    + "(\\s*,\\s+)?)*((((\\s*and\\s+)?(\\s*or\\s+)?)?(\\s*)(<np>([^<]*)</np>))?))?";
 
     /**
      * private constructor.

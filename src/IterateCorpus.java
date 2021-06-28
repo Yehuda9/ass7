@@ -82,7 +82,7 @@ public abstract class IterateCorpus {
                 if (nounPhrase == null) {
                     continue;
                 }
-                data.addNpToData1(nounPhrase);
+                data.addNpToData(nounPhrase);
             } while (hypernymMatcher.find());
         }
     }
@@ -117,7 +117,7 @@ public abstract class IterateCorpus {
                 e.printStackTrace();
                 System.exit(1);
             }
-            break;
+            //break;
         }
         uniqueBehaviour();
         output();

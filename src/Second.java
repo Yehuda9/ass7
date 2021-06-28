@@ -7,10 +7,14 @@ public final class Second extends FirstToFourthRgx {
     /**
      * The Second rgx.
      */
-    public static final String SECOND_RGX =
+    /*public static final String SECOND_RGX =
             "such\\s+(<np>([^<]*)</np>)\\s+as(\\s*,\\s*)?\\s+(<np>([^<]*)</np>)((\\s*,\\s*)?"
                     + "(<np>([^<]*)</np>)(\\s*,\\s*)?)*"
-                    + "((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)(<np>([^<]*)</np>)))?";
+                    + "((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)(<np>([^<]*)</np>)))?";*/
+    public static final String SECOND_RGX =
+            "such\\s+(\\s*)(<np>([^<]*)</np>)\\s+as(\\s+,\\s*)?\\s+(\\s*)(<np>([^<]*)</np>)((\\s+,\\s+)?"
+                    + "(\\s*)(<np>([^<]*)</np>)(\\s*)(\\s+,\\s+)?)*"
+                    + "((((\\s*,\\s+)?(\\s+and\\s+)?(\\s+or\\s+)?)(\\s*)(<np>([^<]*)</np>)))?";
 
     /**
      * private constructor.

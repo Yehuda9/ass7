@@ -19,10 +19,8 @@ public abstract class FifthRgx extends GeneralBehaviour {
             String hyponym = hyponymMatcher.group();
             hyponymMatcher.find();
             Hypernym hypernym = new Hypernym(hyponymMatcher.group(1));
-            String hyper = hyponymMatcher.group(1);
             hyponymMatcher = p2.matcher(hyponym);
-            nounPhrase = new NounPhrase(hyper);
-            //nounPhrase = new NounPhrase(hypernym);
+            nounPhrase = new NounPhrase(hypernym);
         }
         if (hyponymMatcher == null) {
             return null;
