@@ -1,5 +1,4 @@
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -128,27 +127,6 @@ public class Data {
             increaseHyponym(hypernym, hyponym);
         } else {
             addHyponymToDb(hypernym, hyponym);
-        }
-    }
-
-    /**
-     * Sort hyponym list for every hypernym.
-     * using compareTo method.
-     */
-    public void sortHyponymList() {
-        getDb().forEach((key, value) -> value.sort(Hyponym::compareTo));
-    }
-
-    /**
-     * Reduce under 3 hyponyms.
-     * if list of hyponyms size is less than 3, delete it.
-     */
-    public void reduceUnder3hyponyms() {
-        Map<Hypernym, List<Hyponym>> dbCopy = new HashMap<>(getDb());
-        for (Map.Entry<Hypernym, List<Hyponym>> hypernym : dbCopy.entrySet()) {
-            if (hypernym.getValue().size() < 3) {
-                getDb().remove(hypernym.getKey());
-            }
         }
     }
 }

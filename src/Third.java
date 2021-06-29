@@ -3,10 +3,10 @@
  * singleton
  */
 public final class Third extends FirstToFourthRgx {
-    private static Third thirdSingleInstance = null;
     private static final String THIRD_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*including\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
-                    + "(\\s*,\\s*)?)*((((\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
+            "<np>([^<]*)</np>\\s(,\\s)?including\\s(,\\s)?<np>([^<]*)</np>\\s(((,\\s)?(<np>([^<]*)</np>)\\s(,\\s)?)*"
+                    + "((((,\\s)?(and\\s)?(or\\s)?)?(<np>([^<]*)</np>))?))?";
+    private static Third thirdSingleInstance = null;
 
     /**
      * private constructor.
@@ -19,7 +19,9 @@ public final class Third extends FirstToFourthRgx {
      * @return instance of this.
      */
     public static Third getInstance() {
-        if (thirdSingleInstance == null) { thirdSingleInstance = new Third(); }
+        if (thirdSingleInstance == null) {
+            thirdSingleInstance = new Third();
+        }
         return thirdSingleInstance;
     }
 

@@ -6,9 +6,8 @@ public final class Fifth extends FifthRgx {
     /**
      * The Fifth rgx.
      */
-    public static final String FIFTH_RGX = "<np>([^<]*)</np>(\\s*,\\s*)?\\s*which\\s+is\\s*(\\s*,\\s*)?"
-            + "((\\s*,\\s*)?(\\s*an\\s+example\\s*|\\s*a\\s+kind\\s*|\\s*a\\s+class\\s*)?"
-            + "(\\s*,\\s*)?(of\\s+))?<np>([^<]*)</np>";
+    public static final String FIFTH_RGX = "<np>([^<]*)</np>\\s(,\\s)?which(\\s)is\\s(,\\s)?"
+            + "((an(\\s)example|a(\\s)kind|a(\\s)class)?\\s(,\\s)?(of\\s))?<np>([^<]*)</np>";
     private static Fifth fifthSingleInstance = null;
 
     /**
@@ -22,7 +21,9 @@ public final class Fifth extends FifthRgx {
      * @return instance of this.
      */
     public static Fifth getInstance() {
-        if (fifthSingleInstance == null) { fifthSingleInstance = new Fifth(); }
+        if (fifthSingleInstance == null) {
+            fifthSingleInstance = new Fifth();
+        }
         return fifthSingleInstance;
     }
 

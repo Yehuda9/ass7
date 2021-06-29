@@ -31,6 +31,7 @@ public class IterateCorpusFirstPart extends IterateCorpus {
             if (hypernym.getValue().size() < 3) {
                 continue;
             }
+            hypernym.getValue().sort(Hyponym::compareTo);
             assert writer != null;
             writer.write(hypernym.getKey() + ": ");
             int i = 0;

@@ -51,8 +51,12 @@ public class Hyponym implements java.lang.Comparable<Hyponym> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Hyponym hyponym = (Hyponym) o;
         return Objects.equals(getName().toLowerCase(), hyponym.getName().toLowerCase());
     }
