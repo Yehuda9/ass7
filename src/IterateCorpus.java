@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,7 +101,7 @@ public abstract class IterateCorpus {
         for (File file : files) {
             try {
                 bufferedReader = new BufferedReader(new FileReader(file));
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 System.exit(1);
             }
@@ -108,7 +109,7 @@ public abstract class IterateCorpus {
                 while ((line = bufferedReader.readLine()) != null) {
                     iterateRegex(line);
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 System.exit(1);
             }

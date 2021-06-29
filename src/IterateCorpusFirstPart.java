@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -23,7 +24,7 @@ public class IterateCorpusFirstPart extends IterateCorpus {
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(this.getOutputPath() + "/hypernym_db.txt", StandardCharsets.UTF_8);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         int k = 0;
