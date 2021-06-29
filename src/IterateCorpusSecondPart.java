@@ -28,14 +28,11 @@ public class IterateCorpusSecondPart extends IterateCorpus {
         this.hyponym = h;
     }
 
-    @Override
-    protected void uniqueBehaviour() {
-        countHypernym();
-    }
 
     @Override
     protected void output() {
-        if (hypernymIntegerMap.isEmpty()){
+        countHypernym();
+        if (hypernymIntegerMap.isEmpty()) {
             System.out.println("The lemma doesn't appear in the corpus.");
             return;
         }

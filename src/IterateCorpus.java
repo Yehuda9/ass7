@@ -88,11 +88,6 @@ public abstract class IterateCorpus {
     }
 
     /**
-     * specify behaviour for first and second assignment.
-     */
-    protected abstract void uniqueBehaviour();
-
-    /**
      * Send line to match.
      * for each file in corpus, iterate file line by line.
      * send each line to iterateRegex method.
@@ -117,9 +112,8 @@ public abstract class IterateCorpus {
                 e.printStackTrace();
                 System.exit(1);
             }
-            //break;
+            break;
         }
-        uniqueBehaviour();
         output();
     }
 

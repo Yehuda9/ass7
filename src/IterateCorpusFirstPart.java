@@ -19,12 +19,6 @@ public class IterateCorpusFirstPart extends IterateCorpus {
     }
 
     @Override
-    protected void uniqueBehaviour() {
-        getData().reduceUnder3hyponyms();
-        getData().sortHyponymList();
-    }
-
-    @Override
     protected void output() {
         PrintWriter writer = null;
         try {
@@ -34,6 +28,9 @@ public class IterateCorpusFirstPart extends IterateCorpus {
         }
         int k = 0;
         for (Map.Entry<Hypernym, List<Hyponym>> hypernym : getData().getDb().entrySet()) {
+            if (hypernym.getValue().size() < 3) {
+                continue;
+            }
             assert writer != null;
             writer.write(hypernym.getKey() + ": ");
             int i = 0;

@@ -7,12 +7,9 @@ public final class First extends FirstToFourthRgx {
     /**
      * The First rgx.
      */
-    /*public static final String FIRST_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
-                    + "(\\s*,\\s*)?)*((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";*/
     public static final String FIRST_RGX =
-            "<np>([^<]*)</np>(\\s+,\\s+)?\\s+such\\s+as\\s+(\\s*,\\s+)?<np>([^<]*)</np>(((\\s+,\\s+)?(\\s*)(<np>([^<]*)</np>)"
-                    + "(\\s+,\\s+)?(\\s*))*((((\\s*,\\s+)?(\\s*and\\s+)?(\\s*or\\s+)?)?(\\s*)(<np>([^<]*)</np>))?))?";
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*such\\s+as\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
 
     /**
      * private constructor.

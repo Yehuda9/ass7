@@ -6,12 +6,9 @@ public final class Fourth extends FirstToFourthRgx {
     /**
      * The Fourth rgx.
      */
-    /*public static final String FOURTH_RGX =
-            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*especially\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
-                    + "(\\s*,\\s*)?)*((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";*/
     public static final String FOURTH_RGX =
-            "<np>([^<]*)</np>(\\s+,\\s*)?\\s+especially\\s+(\\s*,\\s+)?(\\s*)<np>([^<]*)</np>(((\\s+,\\s+)?(\\s*)(<np>([^<]*)</np>)(\\s*)"
-                    + "(\\s*,\\s+)?)*((((\\s*,\\s+)?(\\s*and\\s+)?(\\s*or\\s+)?)?(\\s*)(<np>([^<]*)</np>))?))?";
+            "<np>([^<]*)</np>(\\s*,\\s*)?\\s*especially\\s*(\\s*,\\s*)?<np>([^<]*)</np>(((\\s*,\\s*)?(<np>([^<]*)</np>)"
+                    + "(\\s*,\\s*)?)*((((\\s*,\\s*)?(\\s*and\\s*)?(\\s*or\\s*)?)?(<np>([^<]*)</np>))?))?";
     private static Fourth fourthSingleInstance = null;
 
     /**
